@@ -7,11 +7,6 @@ searchBtn.addEventListener('click', async () => {
     await displayData(recipes)
 })
 
-/*filterIngredient.addEventListener('input', async (event) => {
-    console.log('value', event.target.value)
-   await displayTag(event.target.value)
-})*/
-
 filterIngredient.addEventListener('keydown', async (event) => {
     if (event.code === "Enter") {
         await displayFilterList(event.target.value)
