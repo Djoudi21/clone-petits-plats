@@ -1,0 +1,23 @@
+#filter-elements {
+    display: none;
+    background-color: #286090;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.filter-container {
+    width: 33%;
+    margin-top: 20px;
+    position: relative;
+}
+
+.filter {
+    height: 50px;
+}
+
+.filter::placeholder {
+    color: white;
+    font-weight: bold;
+}
+

@@ -1,0 +1,48 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.card-container {
+    background-color: #E7E7E7;
+    border-radius: 5px;
+}
+
+.img-container {
+    border:  2px solid blue;
+}
+
+.img-card {
+    width: 100%;
+    height: 50%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.info-container {
+}
+
+.ingredient-title {
+    color:  #000000;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.ingredient-description {
+    width: 50%;
+    color:  #000000;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.ingredient-list-element {
+    color:  #000000;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+

@@ -1,0 +1,57 @@
+.m-0 {
+    margin: 0;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.flex-start {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.border {
+    border: 2px solid red;
+}
+
+.w {
+    width: 33%;
+    height: 100%;
+}
+
+.py-10 {
+    padding: 0 10px 0 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.my-10 {
+    margin: 10px 0 10px 0;
+}
+
+.display-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+}
