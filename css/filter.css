@@ -4,6 +4,7 @@
     color: white;
     border-radius: 5px;
     padding: 5px;
+    width: fit-content;
 }
 
 .filter-container {
