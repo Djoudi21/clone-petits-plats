@@ -1,14 +1,23 @@
-#filter-elements {
-    display: none;
+#filter-ingredient-elements {
     background-color: #286090;
+    display: none;
+}
+
+#filter-device-elements {
+    background-color: #C9302C;
+    display: none;
+}
+
+#filter-utensil-elements {
+    background-color: #5CB85B;
+    display: none;
+}
+
+.filter-container {
     color: white;
     border-radius: 5px;
     padding: 5px;
     width: fit-content;
-}
-
-.filter-container {
-    width: 33%;
     margin-top: 20px;
     position: relative;
 }

@@ -53,7 +53,7 @@
 .display-grid {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr);
-    gap: 50px;
+    gap: 20px;
 }
 
 .big {

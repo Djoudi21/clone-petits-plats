@@ -26,32 +26,22 @@
                     <input id="filter-ingredient" type="text" placeholder="Ingredients" class="filter btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" />
                 </label>
             </li>
-            <li class="filter-item">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Appareils
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>Action</li>
-                        <li>Another action</li>
-                        <li>Something else here</li>
-                    </ul>
-                </div>
+            <li class="">
+                <label>
+                    <input id="filter-device" type="text" placeholder="Devices" class="filter btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" />
+                </label>
             </li>
-            <li class="filter-item">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ustensiles
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>Action</li>
-                        <li>Another action</li>
-                        <li>Something else here</li>
-                    </ul>
-                </div>
+            <li class="">
+                <label>
+                    <input id="filter-utensil" type="text" placeholder="Utensils" class="filter btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" />
+                </label>
             </li>
         </ul>
-        <section id="filter-elements">
+        <section id="filter-ingredient-elements" class="filter-container">
+        </section>
+        <section id="filter-device-elements" class="filter-container">
+        </section>
+        <section id="filter-utensil-elements" class="filter-container">
         </section>
     </section>
     <section id="recipes" class="wrapper"></section>

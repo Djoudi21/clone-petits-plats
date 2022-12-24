@@ -1,15 +1,25 @@
 .tag-container {
     display: flex;
     align-items: center;
-    width: 200px;
 }
 
 .tag {
-    background-color: #3282F7;
     width: 107px;
     height: 37px;
     border-radius: 5px;
     text-align: center;
     color: white;
     margin-right: 5px;
+}
+
+.blue-tag {
+    background-color: #3279B7;
+}
+
+.red-tag {
+    background-color: #C9302C;
+}
+
+.green-tag {
+    background-color: #5CB85B;
 }
