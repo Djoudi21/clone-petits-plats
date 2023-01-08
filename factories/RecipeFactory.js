@@ -56,29 +56,5 @@ function recipeFactory(data) {
         return article
     }
 
-    // TODO: move getTagDOM function to TagFactory file
-    function getTagDOM() {
-        const tag = document.createElement('div')
-        tag.classList.add('tag', 'flex-center')
-        tag.innerText = data
-        return tag
-    }
-
-    // TODO: move getFilterListDOM function to fFilterListFactory file
-    function getFilterListDOM() {
-        const tag = document.createElement('div')
-        tag.classList.add('tag-container')
-        tag.innerText = data
-        return tag
-    }
-
-    function createIngredient() {
-
-        ingredients.map(ingredient => {
-            const element = document.createElement('li')
-            return element.innerText = `${ingredient.ingredient}: ${ingredient.quantity} ${ingredient.unit}`
-        })
-    }
-
-    return {getRecipeCardDOM, getTagDOM, getFilterListDOM}
+    return {getRecipeCardDOM}
 }
