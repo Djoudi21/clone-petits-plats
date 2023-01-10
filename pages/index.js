@@ -44,10 +44,10 @@ searchInput.addEventListener('click', async () => {
             filteredIngredientsToDisplay = []
             filteredDevicesToDisplay = []
             filteredUtensilsToDisplay = []
-            const toto = document.createElement("div")
-            toto.innerText = "« Aucune recette ne correspond à votre critère… vous pouvez\n" +
+            const noRecipes = document.createElement("div")
+            noRecipes.innerText = "« Aucune recette ne correspond à votre critère… vous pouvez\n" +
                 "chercher « tarte aux pommes », « poisson », etc.   "
-            recipesSection.append(toto)
+            recipesSection.append(noRecipes)
         } else {
             //CREATE AND DISPLAY RECIPES CARD
             await displayRecipes(filteredRecipes)
