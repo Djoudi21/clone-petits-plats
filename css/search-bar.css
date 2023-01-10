@@ -2,9 +2,7 @@
     width: 100%;
     display: block;
     color: #555;
-    background-color: #fff;
-    background-image: none;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 
 .warning {
@@ -13,5 +11,12 @@
 
 .search-bar-border {
     border: 1px solid #ccc;
-
 }
+
+input[type="text"][name="search-bar"] {
+    background-image: url('../assets/loupe.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 30px;
+    font-weight: bold;
+ }

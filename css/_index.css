@@ -34,3 +34,18 @@ ul {
 li {
     list-style-type: none;
 }
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.title {
+    filter: invert(45%) sepia(34%) saturate(6882%) hue-rotate(334deg) brightness(89%) contrast(78%);
+    margin: 0;
+}
+
+

@@ -16,8 +16,9 @@ function recipeFactory(data) {
         title.classList.add('ingredient-title')
         title.innerText = `${name}`
         const timeContainer = document.createElement('div')
-        const clockLogo = document.createElement('span')
-        clockLogo.innerText = 'logo'
+        const clockLogo = document.createElement('img')
+        clockLogo.src = '../assets/clock.png'
+        clockLogo.classList.add('clock-icon')
         const timeValue = document.createElement('span')
         timeValue.innerText = `${time}mn`
 
@@ -30,9 +31,15 @@ function recipeFactory(data) {
             element.classList.add('ingredient-list-element')
             const spanIngredient = document.createElement('span')
             spanIngredient.classList.add('bold')
-            spanIngredient.innerText = `${ingredient.ingredient}: `
+            spanIngredient.innerText = `${ingredient.ingredient}`
             const spanQuantity = document.createElement('span')
-            spanQuantity.innerText = `${ingredient.quantity} ${ingredient.unit}`
+            if(ingredient.unit === undefined && ingredient.quantity === undefined) {
+                spanQuantity.innerText = ``
+            } else if (ingredient.unit === undefined && ingredient.quantity !== undefined) {
+                spanQuantity.innerText = `: ${ingredient.quantity}`
+            } else {
+                spanQuantity.innerText = `: ${ingredient.quantity} ${ingredient.unit}`
+            }
             element.append(spanIngredient)
             element.append(spanQuantity)
             ingredientsList.append(element)

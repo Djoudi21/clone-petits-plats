@@ -46,6 +46,10 @@
     margin-bottom: 10px;
 }
 
+.mb-100 {
+    margin-bottom: 100px;
+}
+
 .my-10 {
     margin: 10px 0 10px 0;
 }
@@ -58,4 +62,16 @@
 
 .big {
     width: 500px;
+}
+
+.hide {
+    display: none;
+}
+
+.w-500 {
+    width: 700px;
+}
+
+.m-0 {
+    margin: 0;
 }
