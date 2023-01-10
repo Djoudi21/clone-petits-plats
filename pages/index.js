@@ -107,10 +107,10 @@ filterIngredientInput.addEventListener('keyup', async (event) => {
 
 filterDeviceInput.addEventListener('keyup', async (event) => {
     filterDeviceListSection.innerHTML = ''
-    filteredDevicesToDisplay = filteredDevicesToDisplay.filter(el => {
+    const newFilteredDevicesToDisplay = filteredDevicesToDisplay.filter(el => {
         return el.toLowerCase().includes(event.target.value)
     });
-    filteredDevicesToDisplay.forEach(el => {
+    newFilteredDevicesToDisplay.forEach(el => {
         const filterListDOM = createFilterDomElement(el, filteredRecipes)
         filterDeviceListSection.appendChild(filterListDOM);
     })
