@@ -69,11 +69,12 @@ async function getRecipes() {
 }
 
 function displayRecipes(recipes) {
-    recipes.forEach((recipe) => {
-        const recipeModel = recipeFactory(recipe);
+    for (let i=0; i < recipes.length; i++) {
+        console.log(recipes[i]);
+        const recipeModel = recipeFactory(recipes[i]);
         const recipeCardDOM = recipeModel.getRecipeCardDOM();
         recipeSection.appendChild(recipeCardDOM);
-    });
+    }
 }
 
 function getFilteredRecipes(recipes, value) {
@@ -89,17 +90,21 @@ function getFilteredRecipes(recipes, value) {
 
 // TAGS FUNCTIONS
 function setFilterElements(recipes) {
-    recipes.forEach(recipe => {
-        recipe.ingredients.forEach(ingredient => {
-            const ingredientName = ingredient.ingredient
+    for (let i=0; i < recipes.length; i++) {
+        console.log(recipes[i]);
+        for (let j=0; j < recipes[i].ingredients.length; j++) {
+            console.log(recipes[i].ingredients[j]);
+            const ingredientName = recipes[i].ingredients[j].ingredient
             insertFilterElementBySection(ingredientName, "filterIngredientListSection", recipes)
-        })
-        insertFilterElementBySection(recipe.appliance, "filterDeviceListSection", recipes)
-        recipe.ustensils.forEach(utensil => {
-            insertFilterElementBySection(utensil, "filterUtensilListSection", recipes)
-        })
+        }
 
-    })
+        insertFilterElementBySection(recipes[i].appliance, "filterDeviceListSection", recipes)
+
+        for (let k=0; k < recipes[i].ustensils.length; k++) {
+            console.log(recipes[i].ustensils[k]);
+            insertFilterElementBySection(recipes[i].ustensils[k], "filterUtensilListSection", recipes)
+        }
+    }
 }
 
 function insertFilterElementBySection(data, section, recipes) {
