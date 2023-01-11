@@ -70,7 +70,6 @@ async function getRecipes() {
 
 function displayRecipes(recipes) {
     for (let i=0; i < recipes.length; i++) {
-        console.log(recipes[i]);
         const recipeModel = recipeFactory(recipes[i]);
         const recipeCardDOM = recipeModel.getRecipeCardDOM();
         recipeSection.appendChild(recipeCardDOM);
@@ -78,22 +77,20 @@ function displayRecipes(recipes) {
 }
 
 function getFilteredRecipes(recipes, value) {
-    return recipes.filter(recipe => {
-        const result = isRecipeIncludingInputValueInNameOrDescription(recipe, value)
-        const result2 = isRecipeIncludingInputValueInUstensils(recipe, value)
-        const result3 = isRecipeIncludingInputValueInDevices(recipe, value)
-        if (result || result2 || result3) {
-            return recipe
-        }
-    })
+    let filteredArray = [];
+    for (let i=0; i < recipes.length; i++) {
+        const result = isRecipeIncludingInputValueInNameOrDescription(recipes[i], value)
+        const result2 = isRecipeIncludingInputValueInUstensils(recipes[i], value)
+        const result3 = isRecipeIncludingInputValueInDevices(recipes[i], value)
+        if (result || result2 || result3) filteredArray.push(recipes[i])
+    }
+    return filteredArray
 }
 
 // TAGS FUNCTIONS
 function setFilterElements(recipes) {
     for (let i=0; i < recipes.length; i++) {
-        console.log(recipes[i]);
         for (let j=0; j < recipes[i].ingredients.length; j++) {
-            console.log(recipes[i].ingredients[j]);
             const ingredientName = recipes[i].ingredients[j].ingredient
             insertFilterElementBySection(ingredientName, "filterIngredientListSection", recipes)
         }
@@ -101,7 +98,6 @@ function setFilterElements(recipes) {
         insertFilterElementBySection(recipes[i].appliance, "filterDeviceListSection", recipes)
 
         for (let k=0; k < recipes[i].ustensils.length; k++) {
-            console.log(recipes[i].ustensils[k]);
             insertFilterElementBySection(recipes[i].ustensils[k], "filterUtensilListSection", recipes)
         }
     }
@@ -143,7 +139,7 @@ function createFilterDomElement(data, recipes) {
         resetInnerHTML(recipesSection)
         recipeSection.classList.add('recipes')
         filteredRecipes = getFilteredRecipes(recipes,  filterDomElement.innerText)
-        await displayRecipesAndSetFIlter(filteredRecipes)
+        await displayRecipesAndSetFilter(filteredRecipes)
     })
 
     return filterDomElement
@@ -152,17 +148,19 @@ function createFilterDomElement(data, recipes) {
 // UTILS FUNCTIONS
 function isRecipeIncludingInputValueInNameOrDescription(recipe, value) {
     const lowerCasedValue = value.toLowerCase()
-    const newArr =  recipe.ingredients.map(el => {
-        return el.ingredient.toLowerCase()
-    })
+    let newArr = []
+    for (let k=0; k < recipe.ingredients.length; k++) {
+        newArr.push(recipe.ingredients[k].ingredient.toLowerCase())
+    }
    return recipe.name.toLowerCase().includes(lowerCasedValue) || recipe.description.toLowerCase().includes(lowerCasedValue) || newArr.includes(lowerCasedValue)
 }
 
 function isRecipeIncludingInputValueInUstensils(recipe, value) {
     const lowerCasedValue = value.toLowerCase()
-    const newArr =  recipe.ustensils.map(el => {
-        return el.toLowerCase()
-    })
+    let newArr = []
+    for (let k=0; k < recipe.ustensils.length; k++) {
+        newArr.push(recipe.ustensils[k].toLowerCase())
+    }
     return newArr.includes(lowerCasedValue)
 }
 
@@ -208,7 +206,7 @@ function createTag(value) {
     return tagModel.getTagDOM();
 }
 
-async function displayRecipesAndSetFIlter(recipes) {
+async function displayRecipesAndSetFilter(recipes) {
     //CREATE AND DISPLAY RECIPES CARD
     displayRecipes(recipes)
 
@@ -249,13 +247,14 @@ function resetInnerHTML(node) {
 
 function setFilterSection(section, array, eventValue, recipes) {
     resetInnerHTML(section)
-    const newArr = array.filter(el => {
-        return  el.toLowerCase().includes(eventValue.toLowerCase())
-    })
-    newArr.forEach(el => {
-        const filterListDOM = createFilterDomElement(el, recipes)
+    let filteredArray = [];
+    for (let j = 0; j < array.length; j++) {
+        if ( array[j].toLowerCase().includes(eventValue.toLowerCase())) filteredArray.push(array[j]);
+    }
+    for (let i=0; i < filteredArray.length; i++) {
+        const filterListDOM = createFilterDomElement(filteredArray[i], recipes)
         section.appendChild(filterListDOM);
-    })
+    }
 }
 
 async function checkFilteredRecipesLength() {
@@ -266,6 +265,6 @@ async function checkFilteredRecipesLength() {
             "chercher « tarte aux pommes », « poisson », etc.   "
         recipesSection.append(noRecipes)
     } else {
-        await displayRecipesAndSetFIlter(filteredRecipes)
+        await displayRecipesAndSetFilter(filteredRecipes)
     }
 }
