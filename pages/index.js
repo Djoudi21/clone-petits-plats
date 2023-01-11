@@ -79,7 +79,7 @@ function displayRecipes(recipes) {
 function getFilteredRecipes(recipes, value) {
     let filteredArray = [];
     for (let i=0; i < recipes.length; i++) {
-        const result = isRecipeIncludingInputValueInNameOrDescription(recipes[i], value)
+        const result = isRecipeIncludingInputValueInNameOrDescriptionOrIngredients(recipes[i], value)
         const result2 = isRecipeIncludingInputValueInUstensils(recipes[i], value)
         const result3 = isRecipeIncludingInputValueInDevices(recipes[i], value)
         if (result || result2 || result3) filteredArray.push(recipes[i])
@@ -146,7 +146,7 @@ function createFilterDomElement(data, recipes) {
 }
 
 // UTILS FUNCTIONS
-function isRecipeIncludingInputValueInNameOrDescription(recipe, value) {
+function isRecipeIncludingInputValueInNameOrDescriptionOrIngredients(recipe, value) {
     const lowerCasedValue = value.toLowerCase()
     let newArr = []
     for (let k=0; k < recipe.ingredients.length; k++) {
