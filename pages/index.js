@@ -19,54 +19,11 @@ let filteredRecipes = []
 
 // EVENT LISTENERS
 searchInput.addEventListener('focus', () => {
-    searchInput.value = ""
+    resetSearchInputValue(searchInput)
 })
 
 searchInput.addEventListener('click', async () => {
-    if (searchInput.value.length < 2) {
-        searchInput.focus()
-        searchInput.classList.add('warning')
-        searchInput.setAttribute("placeholder", "Vous devez entrer un minimum de 3 lettres")
-    } else {
-        recipesSection.innerHTML = ""
-        recipeSection.classList.add('recipes')
-        searchInput.blur()
-        //GET RECIPES
-        const recipes = await getRecipes()
-
-        //GET FILTERED RECIPES
-        filteredRecipes = getFilteredRecipes(recipes,  searchInput.value.trim())
-
-        if (filteredRecipes.length === 0) {
-            filterIngredientListSection.innerHTML = ""
-            filterDeviceListSection.innerHTML = ""
-            filterUtensilListSection.innerHTML = ""
-            filteredIngredientsToDisplay = []
-            filteredDevicesToDisplay = []
-            filteredUtensilsToDisplay = []
-            const noRecipes = document.createElement("div")
-            noRecipes.innerText = "« Aucune recette ne correspond à votre critère… vous pouvez\n" +
-                "chercher « tarte aux pommes », « poisson », etc.   "
-            recipesSection.append(noRecipes)
-        } else {
-            //CREATE AND DISPLAY RECIPES CARD
-            await displayRecipes(filteredRecipes)
-
-            //SET FILTERS
-            filterIngredientListSection.innerHTML = ""
-            filterDeviceListSection.innerHTML = ""
-            filterUtensilListSection.innerHTML = ""
-            filteredIngredientsToDisplay = []
-            filteredDevicesToDisplay = []
-            filteredUtensilsToDisplay = []
-            setFilterElements(filteredRecipes)
-        }
-
-        searchInput.value = ""
-        searchInput.setAttribute("placeholder", "Recherchez par recette, ingredient ou description")
-        searchInput.classList.remove('warning')
-        searchInput.classList.add('search-bar-border')
-    }
+    await checkInputValueLength()
 })
 
 searchInput.addEventListener('keyup', async () => {
@@ -74,57 +31,30 @@ searchInput.addEventListener('keyup', async () => {
 })
 
 filterIngredientInput.addEventListener('focus', async (event) => {
-    filterIngredientInput.value = ""
-    filterIngredientListSection.classList.add('display-grid')
-    filterDeviceListSection.classList.remove('display-grid')
-    filterUtensilListSection.classList.remove('display-grid')
+    resetSearchInputValue(filterIngredientInput)
+    setFilterSectionClassList(filterIngredientListSection, filterDeviceListSection, filterUtensilListSection, 'display-grid')
 })
 
 filterDeviceInput.addEventListener('focus', async (event) => {
-    filterDeviceInput.value = ""
-    filterDeviceListSection.classList.add('display-grid')
-    filterIngredientListSection.classList.remove('display-grid')
-    filterUtensilListSection.classList.remove('display-grid')
+    resetSearchInputValue(filterDeviceInput)
+    setFilterSectionClassList(filterDeviceListSection, filterIngredientListSection, filterUtensilListSection, 'display-grid')
 })
 
 filterUtensilInput.addEventListener('focus', async (event) => {
-    filterUtensilInput.value = ""
-    filterUtensilListSection.classList.add('display-grid')
-    filterDeviceListSection.classList.remove('display-grid')
-    filterIngredientListSection.classList.remove('display-grid')
+    resetSearchInputValue(filterUtensilInput)
+    setFilterSectionClassList(filterUtensilListSection, filterDeviceListSection, filterIngredientListSection, 'display-grid')
 })
 
 filterIngredientInput.addEventListener('keyup', async (event) => {
-    filterIngredientListSection.innerHTML = ''
-    const newFilteredIngredientsToDisplay = filteredIngredientsToDisplay.filter(el => {
-        return  el.toLowerCase().includes(event.target.value)
-    })
-    newFilteredIngredientsToDisplay.forEach(el => {
-        const filterListDOM = createFilterDomElement(el, filteredRecipes)
-        filterIngredientListSection.appendChild(filterListDOM);
-    })
+    setFilterSection(filterIngredientListSection, filteredIngredientsToDisplay, (event.target.value), filteredRecipes)
 })
 
 filterDeviceInput.addEventListener('keyup', async (event) => {
-    filterDeviceListSection.innerHTML = ''
-    const newFilteredDevicesToDisplay = filteredDevicesToDisplay.filter(el => {
-        return el.toLowerCase().includes(event.target.value)
-    });
-    newFilteredDevicesToDisplay.forEach(el => {
-        const filterListDOM = createFilterDomElement(el, filteredRecipes)
-        filterDeviceListSection.appendChild(filterListDOM);
-    })
+    setFilterSection(filterDeviceListSection, filteredDevicesToDisplay, (event.target.value), filteredRecipes)
 })
 
 filterUtensilInput.addEventListener('keyup', async (event) => {
-    filterUtensilListSection.innerHTML = ''
-    const newFilteredUtensilsToDisplay = filteredUtensilsToDisplay.filter(el => {
-        return  el.toLowerCase().includes(event.target.value)
-    })
-    newFilteredUtensilsToDisplay.forEach(el => {
-        const filterListDOM = createFilterDomElement(el, filteredRecipes)
-        filterUtensilListSection.appendChild(filterListDOM);
-    })
+    setFilterSection(filterUtensilListSection, filteredUtensilsToDisplay, (event.target.value), filteredRecipes)
 })
 
 // RECIPES FUNCTIONS
@@ -139,7 +69,6 @@ async function getRecipes() {
 }
 
 function displayRecipes(recipes) {
-    // Create Recipe cards
     recipes.forEach((recipe) => {
         const recipeModel = recipeFactory(recipe);
         const recipeCardDOM = recipeModel.getRecipeCardDOM();
@@ -157,7 +86,6 @@ function getFilteredRecipes(recipes, value) {
         }
     })
 }
-
 
 // TAGS FUNCTIONS
 function setFilterElements(recipes) {
@@ -203,34 +131,14 @@ function createFilterDomElement(data, recipes) {
     const filterListModel = tagFactory(data)
     const filterDomElement = filterListModel.getFilterDomElement();
     filterDomElement.addEventListener('click', async () => {
-        const tagModel = tagFactory(filterDomElement.innerText);
-        const tagDOM = tagModel.getTagDOM();
-        if(filterIngredientListSection.classList.contains('display-grid')) {
-            tagDOM.classList.add('blue-tag')
-        } else if(filterDeviceListSection.classList.contains('display-grid')) {
-            tagDOM.classList.add('red-tag')
-        } else {
-            tagDOM.classList.add('green-tag')
-        }
+        const tagDOM = createTag(filterDomElement.innerText)
+        setTagDOMClassList(filterIngredientListSection, filterDeviceListSection, tagDOM, 'blue-tag', 'red-tag', 'green-tag')
         tagSection.appendChild(tagDOM);
         tagSection.classList.add('tag-container')
-
-
-        recipesSection.innerHTML = ""
+        resetInnerHTML(recipesSection)
         recipeSection.classList.add('recipes')
         filteredRecipes = getFilteredRecipes(recipes,  filterDomElement.innerText)
-
-        //CREATE AND DISPLAY RECIPES CARD
-        await displayRecipes(filteredRecipes)
-
-        //SET FILTERS
-        filterIngredientListSection.innerHTML = ""
-        filterDeviceListSection.innerHTML = ""
-        filterUtensilListSection.innerHTML = ""
-        filteredIngredientsToDisplay = []
-        filteredDevicesToDisplay = []
-        filteredUtensilsToDisplay = []
-        setFilterElements(filteredRecipes)
+        await displayRecipesAndSetFIlter(filteredRecipes)
     })
 
     return filterDomElement
@@ -238,13 +146,121 @@ function createFilterDomElement(data, recipes) {
 
 // UTILS FUNCTIONS
 function isRecipeIncludingInputValueInNameOrDescription(recipe, value) {
-   return recipe.name.toLowerCase().includes(value) || recipe.description.toLowerCase().includes(value) || recipe.ingredients.includes(value)
+    const lowerCasedValue = value.toLowerCase()
+    const newArr =  recipe.ingredients.map(el => {
+        return el.ingredient.toLowerCase()
+    })
+   return recipe.name.toLowerCase().includes(lowerCasedValue) || recipe.description.toLowerCase().includes(lowerCasedValue) || newArr.includes(lowerCasedValue)
 }
 
 function isRecipeIncludingInputValueInUstensils(recipe, value) {
-    if(recipe.ustensils.includes(value)) return true
+    const lowerCasedValue = value.toLowerCase()
+    const newArr =  recipe.ustensils.map(el => {
+        return el.toLowerCase()
+    })
+    return newArr.includes(lowerCasedValue)
 }
 
 function isRecipeIncludingInputValueInDevices(recipe, value) {
-    if(recipe.appliance === value) return true
+    if(recipe.appliance.toLowerCase() === value.toLowerCase()) return true
+}
+
+function setFilterSectionClassList(sectionToAdd, section1ToRemove, section2ToRemove, classToSet ) {
+    if(sectionToAdd.childNodes.length >= 1 && sectionToAdd.childNodes[0].nodeName !== "#text") {
+        sectionToAdd.classList.add(classToSet)
+        section1ToRemove.classList.remove(classToSet)
+        section2ToRemove.classList.remove(classToSet)
+    }
+}
+
+function setTagDOMClassList(section1, section2, tagDOM, classToCheck, classToAdd1, classToAdd2, classToAdd3 ) {
+    if(section1.classList.contains(classToCheck)) {
+        tagDOM.classList.add(classToAdd1)
+    } else if(section2.classList.contains(classToCheck)) {
+        tagDOM.classList.add(classToAdd2)
+    } else {
+        tagDOM.classList.add(classToAdd3)
+    }
+}
+
+function setFilter(recipes) {
+    setSectionsAndArrays()
+    setFilterElements(recipes)
+}
+
+function setSectionsAndArrays(){
+    resetInnerHTML(filterIngredientListSection)
+    resetInnerHTML(filterDeviceListSection)
+    resetInnerHTML(filterUtensilListSection)
+
+    filteredIngredientsToDisplay = []
+    filteredDevicesToDisplay = []
+    filteredUtensilsToDisplay = []
+}
+
+function createTag(value) {
+    const tagModel = tagFactory(value);
+    return tagModel.getTagDOM();
+}
+
+async function displayRecipesAndSetFIlter(recipes) {
+    //CREATE AND DISPLAY RECIPES CARD
+    displayRecipes(recipes)
+
+    //SET FILTERS
+    setFilter(recipes)
+}
+
+async function checkInputValueLength() {
+    if (searchInput.value.length < 2) {
+        searchInput.focus()
+        searchInput.classList.add('warning')
+        searchInput.setAttribute("placeholder", "Vous devez entrer un minimum de 3 lettres")
+    } else {
+        resetInnerHTML(recipesSection)
+        recipeSection.classList.add('recipes')
+        searchInput.blur()
+        //GET RECIPES
+        const recipes = await getRecipes()
+
+        //GET FILTERED RECIPES
+        filteredRecipes = getFilteredRecipes(recipes,  searchInput.value.trim())
+
+        await checkFilteredRecipesLength()
+        resetSearchInputValue(searchInput)
+        searchInput.setAttribute("placeholder", "Recherchez par recette, ingredient ou description")
+        searchInput.classList.remove('warning')
+        searchInput.classList.add('search-bar-border')
+    }
+}
+
+function resetSearchInputValue(input) {
+    input.value = ""
+}
+
+function resetInnerHTML(node) {
+   node.innerHTML = ""
+}
+
+function setFilterSection(section, array, eventValue, recipes) {
+    resetInnerHTML(section)
+    const newArr = array.filter(el => {
+        return  el.toLowerCase().includes(eventValue.toLowerCase())
+    })
+    newArr.forEach(el => {
+        const filterListDOM = createFilterDomElement(el, recipes)
+        section.appendChild(filterListDOM);
+    })
+}
+
+async function checkFilteredRecipesLength() {
+    if (filteredRecipes.length === 0) {
+        setSectionsAndArrays()
+        const noRecipes = document.createElement("div")
+        noRecipes.innerText = "« Aucune recette ne correspond à votre critère… vous pouvez\n" +
+            "chercher « tarte aux pommes », « poisson », etc.   "
+        recipesSection.append(noRecipes)
+    } else {
+        await displayRecipesAndSetFIlter(filteredRecipes)
+    }
 }

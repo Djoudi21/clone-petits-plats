@@ -23,6 +23,12 @@
     align-items: center;
 }
 
+.flex-start {
+    display: flex;
+    justify-content: space-between;
+    align-items: self-start;
+}
+
 .flex-center {
     display: flex;
     justify-content: center;
@@ -74,4 +80,23 @@
 
 .m-0 {
     margin: 0;
+}
+
+.btn2 {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid red;
+    border-bottom: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px 4px 0 0;
 }

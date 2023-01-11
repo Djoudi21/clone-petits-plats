@@ -17,9 +17,8 @@
     color: white;
     padding: 5px;
     width: fit-content;
-    margin-top: 20px;
     position: relative;
-    border-radius: 5px;
+    border-radius: 0 5px 5px 5px;
 }
 
 .filter {
