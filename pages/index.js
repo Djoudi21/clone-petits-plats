@@ -132,7 +132,7 @@ function createFilterDomElement(data, recipes) {
     const filterDomElement = filterListModel.getFilterDomElement();
     filterDomElement.addEventListener('click', async () => {
         const tagDOM = createTag(filterDomElement.innerText)
-        setTagDOMClassList(filterIngredientListSection, filterDeviceListSection, tagDOM, 'blue-tag', 'red-tag', 'green-tag')
+        setTagDOMClassList(filterIngredientListSection, filterDeviceListSection, tagDOM, 'display-grid', 'blue-tag', 'red-tag', 'green-tag')
         tagSection.appendChild(tagDOM);
         tagSection.classList.add('tag-container')
         resetInnerHTML(recipesSection)
