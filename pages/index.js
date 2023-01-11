@@ -134,8 +134,6 @@ function createFilterDomElement(data, recipes) {
     filterDomElement.addEventListener('click', async () => {
         const tagDOM = createTag(filterDomElement.innerText)
         setTagDOMClassList(filterIngredientListSection, filterDeviceListSection, tagDOM, 'display-grid','blue-tag', 'red-tag', 'green-tag')
-        console.log('TITUTU', tagDOM)
-
         tagSection.appendChild(tagDOM);
         tagSection.classList.add('tag-container')
         resetInnerHTML(recipesSection)
@@ -180,7 +178,6 @@ function setFilterSectionClassList(sectionToAdd, section1ToRemove, section2ToRem
 
 function setTagDOMClassList(section1, section2, tagDOM, classToCheck, classToAdd1, classToAdd2, classToAdd3 ) {
     if(section1.classList.contains(classToCheck)) {
-        console.log('TOTO', classToAdd1)
         tagDOM.classList.add(classToAdd1)
     } else if(section2.classList.contains(classToCheck)) {
         tagDOM.classList.add(classToAdd2)
