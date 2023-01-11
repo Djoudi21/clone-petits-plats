@@ -77,8 +77,10 @@ function displayRecipes(recipes) {
 }
 
 function getFilteredRecipes(recipes, value) {
+    console.log('2')
+
     return recipes.filter(recipe => {
-        const result = isRecipeIncludingInputValueInNameOrDescription(recipe, value)
+        const result = isRecipeIncludingInputValueInNameOrDescriptionOrIngredients(recipe, value)
         const result2 = isRecipeIncludingInputValueInUstensils(recipe, value)
         const result3 = isRecipeIncludingInputValueInDevices(recipe, value)
         if (result || result2 || result3) {
@@ -137,6 +139,7 @@ function createFilterDomElement(data, recipes) {
         tagSection.classList.add('tag-container')
         resetInnerHTML(recipesSection)
         recipeSection.classList.add('recipes')
+        console.log('3')
         filteredRecipes = getFilteredRecipes(recipes,  filterDomElement.innerText)
         await displayRecipesAndSetFIlter(filteredRecipes)
     })
@@ -145,7 +148,9 @@ function createFilterDomElement(data, recipes) {
 }
 
 // UTILS FUNCTIONS
-function isRecipeIncludingInputValueInNameOrDescription(recipe, value) {
+function isRecipeIncludingInputValueInNameOrDescriptionOrIngredients(recipe, value) {
+    console.log('2a')
+
     const lowerCasedValue = value.toLowerCase()
     const newArr =  recipe.ingredients.map(el => {
         return el.ingredient.toLowerCase()
@@ -154,6 +159,8 @@ function isRecipeIncludingInputValueInNameOrDescription(recipe, value) {
 }
 
 function isRecipeIncludingInputValueInUstensils(recipe, value) {
+    console.log('2b')
+
     const lowerCasedValue = value.toLowerCase()
     const newArr =  recipe.ustensils.map(el => {
         return el.toLowerCase()
@@ -162,6 +169,8 @@ function isRecipeIncludingInputValueInUstensils(recipe, value) {
 }
 
 function isRecipeIncludingInputValueInDevices(recipe, value) {
+    console.log('2c')
+
     if(recipe.appliance.toLowerCase() === value.toLowerCase()) return true
 }
 
@@ -224,6 +233,7 @@ async function checkInputValueLength() {
         const recipes = await getRecipes()
 
         //GET FILTERED RECIPES
+        console.log('1')
         filteredRecipes = getFilteredRecipes(recipes,  searchInput.value.trim())
 
         await checkFilteredRecipesLength()
